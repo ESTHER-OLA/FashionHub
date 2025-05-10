@@ -41,7 +41,7 @@ const ProductCategorySelector: React.FC<ProductCategorySelectorProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold border-b pb-2">
+      <h2 className="text-lg font-semibold border-b border-border pb-2">
         Categories & Display Options
       </h2>
 

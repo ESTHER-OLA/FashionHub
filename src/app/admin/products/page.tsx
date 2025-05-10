@@ -57,7 +57,7 @@ const AdminProductsPage: React.FC = () => {
           asChild
           className="bg-fashion-primary hover:bg-fashion-primary/90"
         >
-          <Link href="/admin/products/new">
+          <Link href="/admin/product/new">
             <Plus className="mr-2" size={16} />
             Add New Product
           </Link>
@@ -162,8 +162,13 @@ const AdminProductsPage: React.FC = () => {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      <Button className="border border-border" variant="outline" size="sm" asChild>
-                        <Link href={`/admin/products/edit/${product.id}`}>
+                      <Button
+                        className="border border-border"
+                        variant="outline"
+                        size="sm"
+                        asChild
+                      >
+                        <Link href={`/admin/product/${product.id}`}>
                           <Edit size={14} className="mr-1" />
                           Edit
                         </Link>

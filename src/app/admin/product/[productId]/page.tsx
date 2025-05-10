@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,16 +11,18 @@ import { useToast } from "@/hooks/use-toast";
 import { getProductById, products } from '@/data/products';
 import { X, Plus, Save, ArrowLeft } from 'lucide-react';
 import { Product } from '@/types/product';
-import ProductCategorySelector from '@/admin/ProductCategorySelector';
+import ProductCategorySelector from '@/components/ProductCategorySelector';
 
 const AdminProductFormPage: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();
-  const navigate = useNavigate();
+  const params = useParams();
+  const productId = (params as { productId?: string })?.productId ?? '';  
+  const router = useRouter();
   const { toast } = useToast();
   
-  const isEditMode = !!productId;
+  // const isEditMode = !!productId;
+  const isNewProduct = productId === 'new';
   
-  const [formData, setFormData] = useState<Partial<Product> & { isFeatured?: boolean }>({
+  const [formData, setFormData] = useState<Partial<Product> & { isFeatured?: boolean;  promoText?: string; }>({
     id: '',
     name: '',
     price: 0,
@@ -44,7 +46,7 @@ const AdminProductFormPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {
-    if (isEditMode && productId) {
+    if (isNewProduct && productId) {
       const product = getProductById(productId);
       if (product) {
         setFormData({
@@ -53,7 +55,7 @@ const AdminProductFormPage: React.FC = () => {
         });
       }
     }
-  }, [productId, isEditMode]);
+  }, [productId, isNewProduct]);
   
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -121,7 +123,7 @@ const AdminProductFormPage: React.FC = () => {
       if (formData.isNew) {
         promoMessage += 'New Arrival! ';
       }
-      if (formData.isSale && formData.originalPrice) {
+      if (formData.isSale && formData.originalPrice && formData.price !== undefined) {
         const discountPercent = Math.round((1 - (formData.price / formData.originalPrice)) * 100);
         promoMessage += `${discountPercent}% Off! `;
       }
@@ -136,9 +138,10 @@ const AdminProductFormPage: React.FC = () => {
           description: `${formData.name} has been ${isEditMode ? 'updated' : 'added'} successfully.${promoMessage ? ' Promo: ' + promoMessage : ''}`,
         });
         
-        navigate('/admin/products');
+        router.push('/admin/products');
       }, 1000);
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error(error);
       toast({
         title: 'Error',
         description: 'Failed to save product data',
@@ -154,17 +157,17 @@ const AdminProductFormPage: React.FC = () => {
     {/* Back button */}
     <Button 
       variant="outline" 
-      className="mb-6"
-      onClick={() => navigate('/admin/products')}
+      className="mb-6 border border-border"
+      onClick={() => router.push('/admin/products')}
     >
       <ArrowLeft className="mr-2 h-4 w-4" />
       Back to Products
     </Button>
     
-    <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 rounded-lg border">
+    <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 rounded-lg border border-border">
       {/* Basic Information */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Basic Information</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Basic Information</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -227,8 +230,8 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Categories and Display Options */}
       <ProductCategorySelector 
-        category={formData.category}
-        subCategory={formData.subCategory}
+        category={formData.category || ''}
+        subCategory={formData.subCategory || ''}
         gender={formData.gender || 'unisex'}
         isNew={formData.isNew || false}
         isSale={formData.isSale || false}
@@ -243,7 +246,7 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Promotional Information */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Promotional Information</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Promotional Information</h2>
         
         <div>
           <Label htmlFor="promoText">Promotional Text</Label>
@@ -263,7 +266,7 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Product Images */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Product Images</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Product Images</h2>
         
         <div className="space-y-4">
           {formData.images?.map((image, index) => (
@@ -303,7 +306,7 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Product Features */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Product Features</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Product Features</h2>
         
         <div className="space-y-4">
           {formData.features?.map((feature, index) => (
@@ -340,7 +343,7 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Colors and Sizes */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Colors and Sizes</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Colors and Sizes</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
           <div className="space-y-4">
@@ -413,7 +416,7 @@ const AdminProductFormPage: React.FC = () => {
       
       {/* Product Status */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold border-b pb-2">Product Status</h2>
+        <h2 className="text-lg font-semibold border-b border-border pb-2">Product Status</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-center space-x-2">
