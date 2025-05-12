@@ -10,25 +10,25 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShoppingBag, Heart, User, Truck, LogOut } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { getUserOrders, getUserOrdersByStatus } from "@/data/orders";
+import { getUserOrdersByStatus } from "@/data/orders";
 import { Order } from "@/types/product";
 
 const ProfilePage = () => {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [activeOrders, setActiveOrders] = useState<Order[]>([]);
-  const [completedOrders, setCompletedOrders] = useState<Order[]>([]);
-  const [cancelledOrders, setCancelledOrders] = useState<Order[]>([]);
+  // const [completedOrders, setCompletedOrders] = useState<Order[]>([]);
+  // const [cancelledOrders, setCancelledOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     if (user?.id) {
       const active = getUserOrdersByStatus(user.id, "active");
-      const completed = getUserOrdersByStatus(user.id, "completed");
-      const cancelled = getUserOrdersByStatus(user.id, "cancelled");
+      // const completed = getUserOrdersByStatus(user.id, "completed");
+      // const cancelled = getUserOrdersByStatus(user.id, "cancelled");
 
       setActiveOrders(active);
-      setCompletedOrders(completed);
-      setCancelledOrders(cancelled);
+      // setCompletedOrders(completed);
+      // setCancelledOrders(cancelled);
     }
   }, [user]);
 

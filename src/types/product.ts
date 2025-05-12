@@ -43,7 +43,10 @@ export interface Order {
   subtotal: number;
   shipping: number;
   total: number;
-  trackingNumber?: string;
-  estimatedDelivery?: string;
-  currentStatus?: string;
+  shipperName?: string;
+  trackingUrl?: string; 
+  additionalNotes?: string; 
+  trackingNumber?: string; 
+  currentStatus?: string; 
+  estimatedDelivery?: string; 
 }

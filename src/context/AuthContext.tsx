@@ -57,8 +57,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         throw new Error("Please provide both email and password");
       }
-    } catch (error: any) {
-      toast.error(error.message || "Login failed. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Login failed. Please try again.");
+      } else {
+        toast.error("unknown error occured. Please try again.");
+      }
       throw error;
     }
   };
@@ -81,8 +85,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         throw new Error("Please provide all required information");
       }
-    } catch (error: any) {
-      toast.error(error.message || "Signup failed. Please try again.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Signup failed. Please try again.");
+      } else {
+        toast.error("unknown error occured. Please try again.");
+      }
       throw error;
     }
   };
@@ -90,7 +98,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = () => {
     setUser(null);
     localStorage.removeItem("fashionUser");
-    toast.success("Logged out successfully. You've been logged out of your account.");
+    toast.success(
+      "Logged out successfully. You've been logged out of your account."
+    );
   };
 
   return (

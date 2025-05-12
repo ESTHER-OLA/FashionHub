@@ -33,7 +33,7 @@ export default function AdminSidebar({
     "/admin/forgot-password",
   ];
 
-  if (publicPaths.includes(pathname)) {
+  if (!pathname || publicPaths.includes(pathname)) {
     return <>{children}</>; // Do not show sidebar
   }
 

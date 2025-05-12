@@ -16,7 +16,7 @@ export default function DashboardHeader() {
   const { admin } = useAdmin();
   const pathname = usePathname();
 
-  const title = titlesMap[pathname] || "Dashboard";
+  const title = pathname ? titlesMap[pathname] : "Dashboard";
 
   return (
     <div className="border-b border-border bg-white p-6 shadow-sm mb-4">

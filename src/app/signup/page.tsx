@@ -40,8 +40,12 @@ const Signup = () => {
     try {
       await signup(name, email, password);
       router.push("/");
-    } catch (error: any) {
-      setError(error.message || "Failed to create account");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Failed to Create account");
+      }
     } finally {
       setIsLoading(false);
     }

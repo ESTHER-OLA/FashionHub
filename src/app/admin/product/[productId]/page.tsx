@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from "@/hooks/use-toast";
-import { getProductById, products } from '@/data/products';
+import { getProductById } from '@/data/products';
 import { X, Plus, Save, ArrowLeft } from 'lucide-react';
 import { Product } from '@/types/product';
 import ProductCategorySelector from '@/components/ProductCategorySelector';

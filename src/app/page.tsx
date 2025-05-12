@@ -5,7 +5,7 @@ import QueryProvider from "@/components/QueryProvider";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
-import HomePage from "@/pages/HomePage";
+import HomePage from "@/app/HomePage";
 
 const App = () => (
   <QueryProvider>
