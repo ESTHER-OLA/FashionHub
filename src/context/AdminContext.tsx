@@ -66,12 +66,21 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         throw new Error("Invalid admin credentials");
       }
-    } catch (error: any) {
-      toast({
-        title: "Admin login failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({
+          title: "Admin login failed",
+          description: error.message || "Please try again",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Admin login failed",
+          description: "An unknown error occurred",
+          variant: "destructive",
+        });
+      }
+
       throw error;
     }
   };
@@ -79,7 +88,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
   const adminSignup = async (name: string, email: string, password: string) => {
     try {
       // In a real app, this would be an API call with proper validation
-      if (name && email && password) {
+      if (
+        name === "Admin User" &&
+        email === "admin@fashionhub.com" &&
+        password === "admin123"
+      ) {
         // Mock admin data
         const adminData: Admin = {
           id: "admin1",
@@ -97,12 +110,21 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         throw new Error("Please provide all required information");
       }
-    } catch (error: any) {
-      toast({
-        title: "Admin signup failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({
+          title: "Admin Signup failed",
+          description: error.message || "Please try again",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Admin Signup failed",
+          description: "An unknown error occurred",
+          variant: "destructive",
+        });
+      }
+
       throw error;
     }
   };

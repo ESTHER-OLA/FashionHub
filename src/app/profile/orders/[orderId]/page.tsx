@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Truck, Check, X, AlertCircle } from "lucide-react";
+import { ArrowLeft, Truck, AlertCircle } from "lucide-react";
 import { getOrderById } from "@/data/orders";
 
 const OrderDetailPage = () => {

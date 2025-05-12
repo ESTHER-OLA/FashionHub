@@ -18,6 +18,7 @@ const HeaderWrapper = () => {
     "/admin/notifications",
   ];
 
+  if (!pathname) return null;
   return !noHeaderPages.includes(pathname) ? <Header /> : null;
 };
 

@@ -7,19 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UserPlus } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-const adminSignup = async (name: string, email: string, password: string) => {
-  console.log("Signup details:", { name, email, password });
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      localStorage.setItem("adminToken", "fake-token");
-      resolve(true);
-    }, 1000);
-  });
-};
+import { useAdmin } from "@/context/AdminContext";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Full name is required"),
@@ -32,8 +23,9 @@ const SignupSchema = Yup.object().shape({
     .required("Confirm your password"),
 });
 
-const AdminSignup: React.FC = () => {
-  const router = useRouter();
+const AdminSignup = () => {
+  const { adminSignup } = useAdmin();
+  // const router = useRouter();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -56,13 +48,16 @@ const AdminSignup: React.FC = () => {
           onSubmit={async (values, { setSubmitting, setStatus }) => {
             try {
               await adminSignup(values.name, values.email, values.password);
-              router.push("/admin");
-            } catch (err: any) {
-              setStatus(err.message || "Signup failed");
+            } catch (err: unknown) {
+              if (err instanceof Error) {
+                setStatus(err.message);
+              } else {
+                setStatus("Signup failed");
+              }
             } finally {
               setSubmitting(false);
             }
-          }}
+          }}   
         >
           {({ isSubmitting, status }) => (
             <Form className="space-y-4">

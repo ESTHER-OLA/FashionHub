@@ -1,11 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Bell, Check } from "lucide-react";
 
-// ✅ MOCK DATA
 const mockNotifications = [
   {
     id: 1,

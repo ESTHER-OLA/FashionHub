@@ -30,7 +30,7 @@ const ProductDetailPage = () => {
 
   const router = useRouter();
   const params = useParams<{ productId: string }>();
-  const productId = params.productId;
+  const productId = params?.productId;
   const { addItem: addToCart } = useCart();
   const {
     addItem: addToWishlist,

@@ -44,6 +44,7 @@ const AdminProductFormPage: React.FC = () => {
   });
   
   const [loading, setLoading] = useState(false);
+  const isEditMode = productId !== 'new';
   
   useEffect(() => {
     if (isNewProduct && productId) {

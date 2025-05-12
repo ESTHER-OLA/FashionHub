@@ -18,6 +18,7 @@ const FooterWrapper = () => {
     "/admin/notifications",
   ];
 
+  if (!pathname) return null;
   return !noFooterPages.includes(pathname) ? <Footer /> : null;
 };
 

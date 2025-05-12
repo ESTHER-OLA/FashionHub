@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { Product } from "@/types/product";
 import Link from "next/link";
 import {
   Card,
@@ -69,7 +70,8 @@ const initialNotifications = [
 
 const AdminDashboardPage: React.FC = () => {
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
-  const [lowStockProducts, setLowStockProducts] = useState<any[]>([]);
+  // const [lowStockProducts, setLowStockProducts] = useState<any[]>([]);
+  const [lowStockProducts, setLowStockProducts] = useState<(Product & { stockLevel: number })[]>([]);
   const [notifications, setNotifications] = useState(initialNotifications);
   const [showNotifications, setShowNotifications] = useState(false);
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -181,7 +183,7 @@ const AdminDashboardPage: React.FC = () => {
         <Card className="md:col-span-2 border border-border">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium">
-              Today's Summary
+              {"Today's Summary"}
             </CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-3 gap-4">

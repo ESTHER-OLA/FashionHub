@@ -27,8 +27,12 @@ const Login = () => {
     try {
       await login(email, password);
       router.replace(from);
-    } catch (error: any) {
-      setError(error.message || "Failed to login");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Failed to login");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +113,7 @@ const Login = () => {
         </form>
 
         <div className="mt-6 text-center text-sm text-fashion-secondary">
-          Don&apos;t have an account?{" "}
+        {"Don't have an account?"}
           <Link href="/signup" className="text-fashion-accent hover:underline">
             Sign up
           </Link>

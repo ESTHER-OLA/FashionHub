@@ -206,7 +206,7 @@ const AdminSettingsPage: React.FC = () => {
       <Card className='border border-border'>
         <CardHeader>
           <CardTitle>Notification Settings</CardTitle>
-          <CardDescription>Configure which notifications you'd like to receive</CardDescription>
+          <CardDescription>Configure which notifications {"you'd"} like to receive</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={(e) => handleSubmit(e, 'notification')}>

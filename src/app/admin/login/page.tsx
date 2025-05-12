@@ -39,12 +39,16 @@ const AdminLogin = () => {
           onSubmit={async (values, { setSubmitting, setStatus }) => {
             try {
               await adminLogin(values.email, values.password);
-            } catch (err: any) {
-              setStatus(err.message || "Login failed");
+            } catch (err: unknown) {
+              if (err instanceof Error) {
+                setStatus(err.message);
+              } else {
+                setStatus("Login failed");
+              }
             } finally {
               setSubmitting(false);
             }
-          }}
+          }}          
         >
           {({ isSubmitting, status }) => (
             <Form className="space-y-4">
